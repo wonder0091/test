@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        body{
+            width: 100%;
+            height: 100%;
+            background-image: url("images/three.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .header {
+            width: 400px;
+            height: 550px;
+            background: rgba(0, 0, 0, .2);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        label {
+            margin-top: 20px;
+            width: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        label>span {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        label>input {
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            padding: 0 20px;
+            background-color: rgba(255, 255, 255, .6);
+            box-sizing: border-box;
+            outline: none;
+            width: 240px;
+            height: 30px;
+            font-size: 18px;
+        }
+
+        .del {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            width: 325px;
+        }
+
+
+        .pwsd {
+            display: flex;
+            margin-top: 45px;
+        }
+
+        .pwsd>input {
+            width: 24px;
+            height: 24px;
+
+        }
+
+        .pwsd>span {
+            font-size: 18px;
+            color: #fff;
+            margin-left: 20px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            background: rgba(0, 0, 0, .6);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            color: #fff;
+
+        }
+
+
+    </style>
+    <link rel="icon" href="images/favicon.ico">
+</head>
+
+
+<body>
+<div class="header">
+    <h2>登录</h2>
+    <label for="use"><span>用户名：</span><input type="text" id="use"></label>
+    <br>
+    <label for="pwd"><span>密码:</span><input type="password" id="pwd"></label>
+    <br>
+    <div style="width: 200px ;height: 100px">
+        <div style="width: 200px ;height: 30px">
+            <label for="content"><span> 验证码: <button id="content" onclick="reflush()"></button></span>  </label>
+        </div>
+        <br>
+        <div>
+            <label for="content"><span style="font-size: 18px">请输入验证码： <input type="text" id="val"></span>
+            </label>
+        </div>
+    </div>
+    <div class="pwsd">
+        <input type="checkbox" id="cbx"><span>记住密码</span>
+    </div>
+
+
+
+    <div class="del">
+        <button onclick="login()">登录</button>
+        <button><a href="./register.html">去注册</a></button>
+    </div>
+</div>
+<script>
+    let content = document.getElementById("content");
+    let random = Math.round((Math.random()*1000)+99);
+    let btn = document.getElementById("btn");
+    let val = document.getElementById("val");
+    let flag = false;
+    content.textContent = random;
+
+
+    function reflush() {
+        random = Math.round(Math.random()*1000);
+        let content = document.getElementById("content");
+        content.textContent = random;
+    }
+
+
+    //------------
+
+    let use = document.getElementById('use');
+    let pwd = document.getElementById('pwd');
+    let cbx = document.getElementById('cbx');
+    function login() {
+        //登录
+        //取出本地的用户的值
+        let dateUse = localStorage.getItem(use.value);
+        console.log(dateUse)
+        let dateObj = JSON.parse(dateUse);//将取出的值转化为对象
+        console.log(dateObj);
+        if(val.value==random){
+            flag = true;
+        }else {
+            alert("验证码错误");
+            flag = false;
+            reflush();
+        }
+
+        if (use.value !='' && pwd.value != ''&& use.value == dateObj.username && pwd.value == dateObj.password && flag==true) {
+            alert('登陆成功');
+            dateObj.tag = cbx.checked;
+            localStorage.setItem(use.value, JSON.stringify(dateObj));//再将取出的值转化为字符串类型
+            location.href = 'index.html';//登录成功则跳转
+
+        } else if(use.value =='' || pwd.value == ''){
+            alert('用户名或者密码错误')
+        }
+    }
+    use.onblur = function () {//用户失去焦点事件s
+        //取出用户的值
+        let res = localStorage.getItem(use.value);
+        //将用户值转化为对象
+        res = JSON.parse(res);
+        if (res != null && res.tag) {//本地是否有该账号
+            cbx.checked = true;
+            pwd.value = res.password;
+        }
+    }
+
+</script>
+
+</body>
+
+</html>

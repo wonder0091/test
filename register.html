@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <link rel="icon" href="images/favicon.ico">
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url("images/five.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+        }
+        .header {
+            width: 400px;
+            height: 450px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        .header h2 {
+            font-size: 24px;
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .header > label {
+            margin-top: 40px;
+            width: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header > label span {
+            font-size: 24px;
+            color: #fff;
+        }
+        .header > label input {
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            padding: 0 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            box-sizing: border-box;
+            outline: none;
+            width: 240px;
+            height: 30px;
+            font-size: 18px;
+        }
+        .header > div {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            width: 325px;
+        }
+        .header > div button {
+            width: 100px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+    </style>
+</head>
+
+
+
+
+<body>
+
+<div class="header">
+    <h2>注册</h2>
+    </span>
+    <label for="use"><span>用户名：</span><input type="text" id="use"></label>
+    <br>
+    <label for="pwd"><span>密码:</span><input type="password" id="pwd"></label>
+    <br>
+    <label for="pwd2"><span>确认密码 </span><input type="password" id="pwd2"> </label>
+    <br>
+    <div>
+        <button onclick="login()">注册</button>
+        <button><a href="./login.html">去登录</a></button>
+    </div>
+</div>
+
+
+<script>
+    //获取用户名;
+    let useA = localStorage.getItem('username');
+    console.log(useA);
+    //封装注册方法
+    function login() {
+        //获取事件的value
+        let username = document.querySelector('#use').value;
+        let password = document.querySelector('#pwd').value;
+        //这里调用存入本地的数据
+        Date(username, password);
+
+    }
+    //将数据存入本地
+    function Date(username, password) {
+        localStorage.setItem(username, JSON.stringify({
+            username,
+            password,
+            tag: false
+        }))
+        if (username === '' || password === '') {
+            alert('请先注册');
+        }
+        //判断两次密码是否一样
+        else if (pwd.value != pwd2.value) {
+            //不一样的话重新输入
+            alert('两次输入密码不一样 请重新输入');
+        } else {
+            //一样则提示注册成功
+            alert('注册成功 ! ! !')
+        }
+
+    }
+
+</script>
+</body>
+
+</html>
